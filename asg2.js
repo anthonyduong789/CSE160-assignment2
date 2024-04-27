@@ -176,6 +176,10 @@ function renderAllShapes() {
 
   body.matrix.rotate(-5, 0.1, 0, 0);
   let saveTranslate = new Matrix4(body.matrix);
+  let feetStartingPosition = new Matrix4(body.matrix);
+  let feetStartingPosition2 = new Matrix4(body.matrix);
+  let whiteBellyStartingPosition = new Matrix4(body.matrix);
+  let leftShoulderStartingPosition = new Matrix4(body.matrix);
   let bodyXandZ = 0.5;
   body.matrix.scale(bodyXandZ, bodyXandZ * 2, bodyXandZ);
   body.render();
@@ -189,7 +193,7 @@ function renderAllShapes() {
   let saveTranslate1 = new Matrix4(head.matrix);
 
   head.matrix.scale(0.42187, 0.6122, 0.3125);
-  // head.render();
+  head.render();
   let eye = new Cube();
   eye.color = [0.8, 0.8, 0.8, 1.0];
   eye.matrix = saveTranslate1;
@@ -204,16 +208,90 @@ function renderAllShapes() {
   eye2.color = [0.8, 0.8, 0.8, 1.0];
   eye2.matrix = saveTranslate1;
   eye2.matrix.translate(0.321, 0.0, 0.0);
+  let noseStartingPosition = new Matrix4(eye2.matrix);
+
   eye2.matrix.scale(0.082031, 0.074219, 0.03906);
-  // eye2.render();
+  eye2.render();
 
   nose = new Cube();
-  nose.color = [0.0, 0.0, 0.0, 1.0];
+  nose.matrix = noseStartingPosition;
+  nose.color = [0.960784, 0.654902, 0, 1.0];
+  nose.matrix.rotate(-0, 0.1, 0, 0);
   // nose.matrix = saveTranslate1;
-  nose.matrix.translate(0.321, 0.0, 0.0);
+  // NOTE: you want to put the nose ahead of the head by adding head size + eye size
+  nose.matrix.translate(-0.21, -0.18, -0.3125);
 
-  nose.matrix.scale(0.105469, 0.203125, 0.464844);
+  nose.matrix.scale(0.203125, 0.105469, 0.464844);
   nose.render();
+
+  // NOTE: Feet
+  let feetYlength = 0.205469;
+
+  let feet = new Cube();
+  feet.color = [1, 0.596078, 0.070588, 1];
+  feet.matrix = feetStartingPosition;
+  feet.matrix.translate(-0.152735, 0, -0.25);
+  feet.matrix.scale(0.303125, feetYlength, 0.264844);
+
+  feet.render();
+  let feet2 = new Cube();
+  feet2.color = [1, 0.596078, 0.070588, 1];
+  feet2.matrix = feetStartingPosition2;
+  feet2.matrix.translate(0.352735, 0, -0.25);
+  feet2.matrix.scale(0.303125, feetYlength, 0.264844);
+  feet2.render();
+  //end
+
+  let whiteBelly = new Cube();
+  whiteBelly.matrix = whiteBellyStartingPosition;
+  let centerBelly = 0.05;
+  whiteBelly.matrix.scale(bodyXandZ - centerBelly, bodyXandZ + 0.1, 0.03);
+  whiteBelly.matrix.translate(centerBelly, 0.325469 + bodyXandZ / 2, -1);
+
+  whiteBelly.color = [1, 1, 1, 1];
+  whiteBelly.render();
+
+  let leftShoulder = new Cube();
+  let leftShoulderXaxisStart = 0.1;
+  let leftShoulderZlength = 0.4;
+  let leftShoulderYlength = 0.15;
+  let leftShoulderYaxistStart = 4.2;
+  leftShoulder.matrix = leftShoulderStartingPosition;
+  leftShoulder.color = [0.0, 0.0, 0.0, 1.0];
+  leftShoulder.matrix.translate(
+    -leftShoulderXaxisStart,
+    0.8,
+    (bodyXandZ - leftShoulderZlength) / 2,
+  );
+  let leftArmJoint1StartingPos = new Matrix4(leftShoulder.matrix);
+  leftShoulder.matrix.rotate(-10, 0, 0);
+
+  leftShoulder.matrix.scale(
+    leftShoulderXaxisStart,
+    leftShoulderYlength,
+    leftShoulderZlength,
+  );
+  leftShoulder.render();
+
+  let leftArmJoint1 = new Cube();
+  leftArmJoint1.color = [0, 0, 0, 1];
+  let leftArmJoint1xLength = 0.1;
+  let leftArmJoint1yLength = 0.4;
+  let leftArmJoint1zLength = leftShoulderZlength;
+  leftArmJoint1.matrix = leftArmJoint1StartingPos;
+  leftArmJoint1.matrix.translate(
+    -leftArmJoint1xLength + leftShoulderXaxisStart / 2,
+    -leftArmJoint1yLength + leftShoulderYlength / 2,
+    -0.001,
+  );
+
+  leftArmJoint1.matrix.scale(
+    leftArmJoint1xLength,
+    leftArmJoint1yLength,
+    leftArmJoint1zLength - 0.01,
+  );
+
+  leftArmJoint1.render();
   // //NOTE: yellow shape
   // var leftArm = new Cube();
   // leftArm.color = [1, 1, 0, 1];
@@ -243,10 +321,10 @@ function renderAllShapes() {
   //
   //
   var duration = performance.now() - startTime;
-  console.log(
-    " ms:",
-    Math.floor(duration) + " fps: " + Math.floor(10000 / duration),
-  );
+  // console.log(
+  //   " ms:",
+  //   Math.floor(duration) + " fps: " + Math.floor(10000 / duration),
+  // );
   sendTextToHtml(
     " ms:" + Math.floor(duration) + " fps: " + Math.floor(10000 / duration),
     "fps",
