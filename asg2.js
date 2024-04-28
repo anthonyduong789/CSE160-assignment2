@@ -253,7 +253,7 @@ function renderAllShapes() {
 
   let leftShoulder = new Cube();
   let leftShoulderXaxisStart = 0.1;
-  let leftShoulderZlength = 0.4;
+  let leftShoulderZlength = 0.3;
   let leftShoulderYlength = 0.15;
   let leftShoulderYaxistStart = 4.2;
   leftShoulder.matrix = leftShoulderStartingPosition;
@@ -277,13 +277,14 @@ function renderAllShapes() {
   leftArmJoint1.color = [0, 0, 0, 1];
   let leftArmJoint1xLength = 0.1;
   let leftArmJoint1yLength = 0.4;
-  let leftArmJoint1zLength = leftShoulderZlength;
+  let leftArmJoint1zLength = leftShoulderZlength - 0.05;
   leftArmJoint1.matrix = leftArmJoint1StartingPos;
   leftArmJoint1.matrix.translate(
-    -leftArmJoint1xLength + leftShoulderXaxisStart / 2,
+    -leftArmJoint1xLength + leftShoulderXaxisStart / 2 - 0.03,
     -leftArmJoint1yLength + leftShoulderYlength / 2,
-    -0.001,
+    0.025,
   );
+  leftArmJoint1.matrix.rotate(-9.7, 0, 0);
 
   leftArmJoint1.matrix.scale(
     leftArmJoint1xLength,
