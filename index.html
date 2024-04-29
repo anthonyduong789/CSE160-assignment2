@@ -25,12 +25,20 @@
     }
   </style>
   <body onload="main()">
-    <canvas id="asg2" width="400" height="400">
+    <div>
+      <h2>Anthony Duong</h2>
+      <h2>ankaduon@ucsc.edu</h2>
+      <h2>
+        Notes to graders: press on to start the animation and when on shift+left-click the animal to do toggle hugging animation!. To rotate the camera angle left click with no shift key this time within canvas Left click to turn this off. Sliders will only work when antimation is off.
+      </h2>
+    </div>
+    <canvas id="asg2" width="500" height="500">
       Please use the browser supporting "canvas".
     </canvas>
     <div>
+      speed indicator: <p id="fps"></p>
       <div>
-        Animation :<p id="fps"></p>
+        Animation :
       </div>
       <button id="On">ON</button>
       <button id="Off">Off</button>
@@ -47,22 +55,31 @@
         />
       </div>
       <div>
-        Yellow slider <input
+          shoulder Joint slide<input
           type="range"
-          min="-45"
+          min="0"
           max="45"
           value="0"
           class="slider"
-          id="yellowSlide"/>
+          id="shoulderJoint"/>
       </div>
       <div>
-        purple slider <input
+        elbow slider <input
           type="range"
-          min="-45"
-          max="45"
+          min="-12.5"
+          max="12.5"
           value="0"
           class="slider"
-          id="purpleSlide"/>
+          id="elbowJoint"/>
+      </div>
+      <div>
+        fin slider <input
+          type="range"
+          min="-12.5"
+          max="12.5"
+          value="0"
+          class="slider"
+          id="finJoint"/>
       </div>
 
     </div>
